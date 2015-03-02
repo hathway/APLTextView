@@ -47,11 +47,19 @@
         self.counterLabel.textAlignment = NSTextAlignmentRight;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:self];
+
+        [[NSNotificationCenter defaultCenter] addObserver: self forKeyPath:@"frame" options:0 context:nil];
     }
 }
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (object == self && [keyPath isEqualToString:@"frame"]) {
+        [self layoutSubviews]
+    }
 }
 
 - (BOOL)hasCounter {
