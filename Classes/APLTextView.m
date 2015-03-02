@@ -36,16 +36,16 @@
         UIImage *backgroundImage = [[UIImage imageNamed:@"background-textfield"] resizableImageWithCapInsets:UIEdgeInsetsMake(5., 10., 5., 10.)];
         self.backgroundView.image = backgroundImage;
         self.scrollsToTop = NO;
-        
+
         self.placeholderLabel = [UILabel new];
         self.placeholderLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.placeholderLabel.numberOfLines = 0;
         self.placeholderLabel.tag = 999;
-        
+
         self.counterLabel = [UILabel new];
         self.counterLabel.tag = 998;
         self.counterLabel.textAlignment = NSTextAlignmentRight;
-        
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:self];
 
         [[NSNotificationCenter defaultCenter] addObserver: self forKeyPath:@"frame" options:0 context:nil];
@@ -58,7 +58,7 @@
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (object == self && [keyPath isEqualToString:@"frame"]) {
-        [self layoutSubviews]
+        [self layoutSubviews];
     }
 }
 
@@ -68,13 +68,13 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
+
     self.backgroundView.frame = CGRectMake(0., self.contentOffset.y, self.frame.size.width, self.frame.size.height);
     if (!self.backgroundView.superview) {
         [self addSubview:self.backgroundView];
     }
     [self sendSubviewToBack:self.backgroundView];
-    
+
     CGFloat leftMargin = 8.;
     CGFloat topMargin = 8.;
     self.placeholderLabel.frame = CGRectMake(leftMargin + self.contentInset.left, topMargin + self.contentInset.top, self.frame.size.width - - leftMargin * 2 - self.contentInset.left - self.contentInset.right, self.frame.size.height - topMargin - self.contentInset.top - self.contentInset.bottom);
@@ -86,7 +86,7 @@
     if (!self.placeholderLabel.superview) {
         [self addSubview:self.placeholderLabel];
     }
-    
+
     CGFloat counterLabelWidth = 50.;
     CGFloat counterLabelHeight = 14.;
     CGFloat counterLabelRight = 6.;
